@@ -1,0 +1,20 @@
+@use "../utils" as *;
+
+.main {
+  display: grid;
+  gap: space(4);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.toolbar {
+  display: grid;
+  gap: space(3);
+
+  @include up(md) {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
