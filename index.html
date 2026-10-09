@@ -1,11 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>To-Do List</title>
+  <!-- Применяем сохранённую тему до отрисовки -->
+  <script>
+    try {
+      var t = localStorage.getItem('todo:theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="dist/main.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-    
+  <a class="skip-link" href="#main">Перейти к списку задач</a>
+
+  <div class="container">
+    <header class="header">
+      <h1 class="header__title">Мои задачи</h1>
+
+      <button class="theme-switcher" id="theme-switcher" type="button" aria-pressed="false">
+        <span class="visually-hidden">Тёмная тема</span>
+        <svg class="theme-switcher__icon theme-switcher__icon--sun" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg class="theme-switcher__icon theme-switcher__icon--moon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+          <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </header>
+
+    <main id="main" class="main" tabindex="-1">
+      <button class="btn btn--primary btn--add" id="add-open" type="button" aria-haspopup="dialog">Добавить задачу</button>
+
+      <section class="toolbar" aria-label="Поиск и фильтры">
+        <form class="search" role="search" onsubmit="return false">
+          <label class="visually-hidden" for="search-input">Поиск по задачам</label>
+          <svg class="search__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input class="search__input" id="search-input" type="search" placeholder="Поиск по задачам" autocomplete="off">
+        </form>
+
+        <div class="filters" role="group" aria-label="Показывать задачи">
+          <button class="filters__btn" type="button" data-filter="all" aria-pressed="true">Все</button>
+          <button class="filters__btn" type="button" data-filter="active" aria-pressed="false">Активные</button>
+          <button class="filters__btn" type="button" data-filter="done" aria-pressed="false">Готовые</button>
+        </div>
+      </section>
+
+      <h2 class="visually-hidden">Список задач</h2>
+      <p class="counter" id="counter"></p>
+
+      <ul class="task-list" id="task-list" role="list"></ul>
+      <p class="empty" id="empty" hidden></p>
+    </main>
+  </div>
+
+  <!-- Озвучивает действия скринридерам -->
+  <p class="visually-hidden" id="status" role="status" aria-live="polite"></p>
+
+  <!-- Модальное окно: создание задачи -->
+  <dialog class="modal" id="add-modal" aria-labelledby="add-title">
+    <form class="modal__body" id="add-form" method="dialog" novalidate>
+      <h2 class="modal__title" id="add-title">Новая задача</h2>
+      <label class="task-form__label" for="add-input">Название задачи</label>
+      <input class="task-form__input" id="add-input" type="text" maxlength="120" autocomplete="off"
+             placeholder="Например, купить молоко" aria-describedby="add-error">
+      <p class="task-form__error" id="add-error" role="alert" hidden></p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" type="button" id="add-cancel">Отмена</button>
+        <button class="btn btn--primary" type="submit">Добавить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Модальное окно: подтверждение удаления -->
+  <dialog class="modal" id="delete-modal" aria-labelledby="delete-title" aria-describedby="delete-text">
+    <form class="modal__body" method="dialog">
+      <h2 class="modal__title" id="delete-title">Удалить задачу?</h2>
+      <p class="modal__text" id="delete-text"></p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" type="submit" value="cancel" autofocus>Отмена</button>
+        <button class="btn btn--danger" type="submit" value="confirm">Удалить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Модальное окно: редактирование -->
+  <dialog class="modal" id="edit-modal" aria-labelledby="edit-title">
+    <form class="modal__body" id="edit-form" method="dialog" novalidate>
+      <h2 class="modal__title" id="edit-title">Редактировать задачу</h2>
+      <label class="task-form__label" for="edit-input">Название задачи</label>
+      <input class="task-form__input" id="edit-input" type="text" maxlength="120" autocomplete="off" aria-describedby="edit-error">
+      <p class="task-form__error" id="edit-error" role="alert" hidden></p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" type="button" id="edit-cancel">Отмена</button>
+        <button class="btn btn--primary" type="submit">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>
