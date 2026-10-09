@@ -1,0 +1,24 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "To-Do List на Sass и vanilla JS",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass scss/main.scss dist/main.css --style=compressed",
+    "watch": "sass --watch scss/main.scss dist/main.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sognatore-coder/To-doList_js.git"
+  },
+  "keywords": [],
+  "author": "Sognatore-coder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sognatore-coder/To-doList_js/issues"
+  },
+  "homepage": "https://github.com/Sognatore-coder/To-doList_js#readme",
+  "devDependencies": {
+    "sass": "^1.105.1"
+  }
+}
