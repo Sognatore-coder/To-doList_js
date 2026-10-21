@@ -1,27 +1,31 @@
 {
   "name": "todo-list",
   "version": "1.0.0",
-  "description": "To-Do List на Sass и vanilla JS",
-  "main": "index.js",
+  "description": "To-Do List на Vue 3 (Composition API), Vite и Sass",
+  "private": true,
   "scripts": {
-    "build": "sass sass/main.scss dist/main.css --style=compressed",
-    "sass:dev": "sass --watch sass/main.scss dist/main.css",
-    "serve": "serve .",
-    "start": "npm run build && npm run serve"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Sognatore-coder/To-doList_js.git"
-  },
-  "keywords": [],
-  "author": "Sognatore-coder",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Sognatore-coder/To-doList_js/issues"
-  },
-  "homepage": "https://github.com/Sognatore-coder/To-doList_js#readme",
+  "keywords": [
+    "todo",
+    "sass",
+    "scss",
+    "vanilla-js",
+    "a11y"
+  ],
+  "license": "MIT",
   "devDependencies": {
-    "sass": "^1.105.1",
-    "serve": "^14.2.6"
-  }
+    "@vitejs/plugin-vue": "^6.0.10",
+    "gh-pages": "^6.3.0",
+    "sass": "^1.77.0",
+    "vite": "^8.3.4"
+  },
+  "dependencies": {
+    "vue": "^3.5.44"
+  },
+  "type": "module"
 }
