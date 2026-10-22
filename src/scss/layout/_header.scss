@@ -1,0 +1,13 @@
+@use "../utils" as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(4);
+  margin-bottom: space(6);
+
+  @include up(md) {
+    margin-bottom: space(8);
+  }
+}

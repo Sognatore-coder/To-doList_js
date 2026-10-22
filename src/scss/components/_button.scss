@@ -1,0 +1,67 @@
+@use "../utils" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: space(2);
+  min-height: $tap-target;
+  padding: 0 space(5);
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  font-weight: 600;
+  line-height: 1;
+  transition: background-color $transition, border-color $transition, color $transition;
+
+  &--primary {
+    background: var(--accent);
+    color: var(--accent-contrast);
+
+    &:hover {
+      background: var(--accent-hover);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    border-color: var(--border-strong);
+    color: var(--text);
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  &--danger {
+    background: var(--danger);
+    color: var(--danger-contrast);
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+
+  // Кнопка «Добавить задачу»: на узких экранах на всю ширину
+  &--add {
+    @include up(sm) {
+      justify-self: start;
+    }
+  }
+
+  // Квадратная кнопка-иконка (редактировать / удалить)
+  &--icon {
+    width: $tap-target;
+    padding: 0;
+    background: transparent;
+    color: var(--text-muted);
+
+    &:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    &.btn--danger-hover:hover {
+      color: var(--danger);
+    }
+  }
+}

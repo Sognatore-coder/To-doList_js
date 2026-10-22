@@ -1,0 +1,26 @@
+@use "../utils" as *;
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+// Ссылка «Перейти к содержимому» для клавиатуры
+.skip-link {
+  @include visually-hidden;
+
+  &:focus {
+    position: fixed;
+    top: space(2);
+    left: space(2);
+    z-index: 100;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: space(2) space(4);
+    clip: auto;
+    clip-path: none;
+    border-radius: $radius-sm;
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+}
