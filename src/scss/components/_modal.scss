@@ -1,0 +1,49 @@
+@use "../utils" as *;
+
+.modal {
+  width: min(28rem, calc(100% - #{space(8)}));
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 30%);
+
+  &::backdrop {
+    background: rgb(10 14 24 / 60%);
+  }
+
+  &[open] {
+    animation: modal-in 180ms ease;
+  }
+
+  &__body {
+    display: grid;
+    gap: space(3);
+    padding: space(6);
+  }
+
+  &__text {
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: space(2);
+    margin-top: space(2);
+
+    @include up(sm) {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}

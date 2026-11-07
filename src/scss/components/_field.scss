@@ -1,0 +1,42 @@
+@use "../utils" as *;
+
+// Поле формы: подпись, ввод, подсказка, ошибка (модальные окна, вход, регистрация)
+.field {
+  display: grid;
+  gap: space(1);
+
+  &__label {
+    font-size: rem(14);
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  &__input {
+    width: 100%;
+    min-height: $tap-target;
+    padding: 0 space(4);
+    border: 1px solid var(--border-strong);
+    border-radius: $radius-md;
+    background: var(--surface);
+    transition: border-color $transition;
+
+    &::placeholder {
+      color: var(--text-muted);
+      opacity: 1;
+    }
+
+    &[aria-invalid="true"] {
+      border-color: var(--danger);
+    }
+  }
+
+  &__hint {
+    font-size: rem(14);
+    color: var(--text-muted);
+  }
+
+  &__error {
+    font-size: rem(14);
+    color: var(--danger);
+  }
+}

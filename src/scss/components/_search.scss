@@ -1,0 +1,56 @@
+@use "../utils" as *;
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    position: absolute;
+    left: space(3);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  &__input {
+    width: 100%;
+    min-height: $tap-target;
+    padding: 0 space(4) 0 space(10);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    background: var(--surface);
+
+    @include up(md) {
+      min-width: 15rem;
+    }
+  }
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: space(1);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  background: var(--surface);
+
+  &__btn {
+    min-height: rem(36);
+    padding: 0 space(3);
+    border: 0;
+    border-radius: $radius-sm;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 600;
+    transition: background-color $transition, color $transition;
+
+    &:hover {
+      color: var(--text);
+    }
+
+    &[aria-pressed="true"] {
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+  }
+}

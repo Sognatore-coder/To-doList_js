@@ -1,0 +1,33 @@
+@use "../utils" as *;
+
+.main {
+  display: grid;
+  gap: space(4);
+
+  &:focus {
+    outline: none; // фокус программный (skip-link), рамка не нужна
+  }
+}
+
+.toolbar {
+  display: grid;
+  gap: space(3);
+
+  @include up(md) {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
+
+// Страница задач
+.todo {
+  display: grid;
+  gap: space(4);
+
+  &__owner {
+    margin-top: space(-3);
+    color: var(--text-muted);
+    font-size: rem(14);
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,0 +1,20 @@
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #eef1f6;
+  --surface: #ffffff;
+  --surface-hover: #e6ebf5;
+  --text: #17202e;
+  --text-muted: #55627a;
+  --border: #d5dbe6;
+  --border-strong: #8a95a9;
+
+  --accent: #2f4fd8;
+  --accent-hover: #2440b8;
+  --accent-contrast: #ffffff;
+  --danger: #b3261e;
+  --danger-contrast: #ffffff;
+  --focus: #2f4fd8;
+  --shadow: 0 1px 2px rgb(23 32 46 / 6%);
+}
