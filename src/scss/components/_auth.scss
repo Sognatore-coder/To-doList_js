@@ -1,0 +1,54 @@
+@use "../utils" as *;
+
+// Карточка форм входа и регистрации
+.auth {
+  display: grid;
+  gap: space(4);
+  width: 100%;
+  max-width: 26rem;
+  margin-inline: auto;
+  padding: space(5);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+
+  @include up(sm) {
+    padding: space(8);
+  }
+
+  &__lead {
+    margin-top: space(-2);
+    color: var(--text-muted);
+  }
+
+  &__form {
+    display: grid;
+    gap: space(4);
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  &__error,
+  &__notice {
+    padding: space(3) space(4);
+    border: 1px solid currentColor;
+    border-radius: $radius-sm;
+    font-size: rem(14);
+  }
+
+  &__error {
+    color: var(--danger);
+  }
+
+  &__notice {
+    color: var(--accent);
+  }
+
+  &__alt {
+    color: var(--text-muted);
+    text-align: center;
+  }
+}

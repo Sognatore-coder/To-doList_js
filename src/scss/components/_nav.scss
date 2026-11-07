@@ -1,0 +1,35 @@
+@use "../utils" as *;
+
+.nav {
+  grid-area: nav;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(1);
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: $tap-target;
+    padding: 0 space(3);
+    border-radius: $radius-sm;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color $transition, color $transition;
+
+    &:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    // RouterLink сам ставит aria-current="page" на ссылку текущей страницы
+    &[aria-current="page"] {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: inset 0 -3px 0 var(--accent);
+    }
+  }
+}

@@ -1,13 +1,49 @@
 @use "../utils" as *;
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "brand actions"
+    "nav nav";
   align-items: center;
-  justify-content: space-between;
-  gap: space(4);
+  gap: space(3) space(4);
   margin-bottom: space(6);
 
   @include up(md) {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "brand nav actions";
     margin-bottom: space(8);
+  }
+
+  &__brand {
+    grid-area: brand;
+    color: var(--text);
+    font-size: rem(22);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  &__actions {
+    grid-area: actions;
+    display: flex;
+    align-items: center;
+    gap: space(2);
+    min-width: 0;
+  }
+
+  // На узких экранах почту показываем на странице задач, в шапке она не помещается
+  &__user {
+    display: none;
+    max-width: 12rem;
+    overflow: hidden;
+    color: var(--text-muted);
+    font-size: rem(14);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include up(md) {
+      display: inline;
+    }
   }
 }

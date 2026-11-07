@@ -1,0 +1,120 @@
+@use "../utils" as *;
+
+.about {
+  display: grid;
+  gap: space(8);
+
+  h2 {
+    margin-bottom: space(3);
+  }
+
+  &__hero {
+    display: grid;
+    gap: space(3);
+    padding: space(5);
+    border: 1px solid var(--border);
+    border-left: space(1) solid var(--accent);
+    border-radius: $radius-lg;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+
+    @include up(md) {
+      padding: space(8);
+    }
+  }
+
+  &__lead {
+    color: var(--text-muted);
+    font-size: rem(18);
+  }
+
+  &__note {
+    padding: space(5);
+    border: 1px dashed var(--border-strong);
+    border-radius: $radius-md;
+    color: var(--text-muted);
+
+    code {
+      padding: 0 space(1);
+      border-radius: $radius-sm;
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+  }
+}
+
+.stats {
+  display: grid;
+  gap: space(3);
+
+  @include up(sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__item {
+    padding: space(4);
+    border: 1px solid var(--border);
+    border-radius: $radius-md;
+    background: var(--surface);
+  }
+
+  &__label {
+    font-size: rem(14);
+    color: var(--text-muted);
+  }
+
+  &__value {
+    margin: 0;
+    font-size: rem(32);
+    font-weight: 700;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+
+  &__item {
+    padding: space(1) space(3);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    font-weight: 600;
+    font-size: rem(14);
+  }
+}
+
+.timeline {
+  display: grid;
+  margin: 0;
+  list-style: none;
+  gap: space(5);
+  padding-left: space(5);
+  border-left: 2px solid var(--border-strong);
+
+  &__item {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: space(2);
+      left: calc(-#{space(5)} - 6px);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+  }
+
+  &__title {
+    font-size: rem(18);
+  }
+
+  &__text {
+    color: var(--text-muted);
+  }
+}
