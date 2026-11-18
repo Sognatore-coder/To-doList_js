@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import type { AuthResult, User } from '../types/user'
 import { toUser } from '../types/user'
 
-
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 export const MIN_PASSWORD_LENGTH = 6
 

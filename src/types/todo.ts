@@ -9,7 +9,6 @@ export interface Todo {
 
 export type TodoFilter = 'all' | 'active' | 'done'
 
-
 export function toTodo(value: unknown): Todo | null {
   if (!isRecord(value)) return null
   const { id, userId, title, done } = value

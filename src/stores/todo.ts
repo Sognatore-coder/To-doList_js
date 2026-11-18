@@ -27,15 +27,13 @@ export const useTodoStore = defineStore('todo', {
 
     visibleTodos(): Todo[] {
       const q = this.query.trim().toLowerCase()
-      return (
-        this.myTodos
-          .filter((t) => {
-            if (this.filter === 'active' && t.done) return false
-            if (this.filter === 'done' && !t.done) return false
-            return !q || t.title.toLowerCase().includes(q)
-          })
-          .sort((a, b) => Number(a.done) - Number(b.done))
-      )
+      return this.myTodos
+        .filter((t) => {
+          if (this.filter === 'active' && t.done) return false
+          if (this.filter === 'done' && !t.done) return false
+          return !q || t.title.toLowerCase().includes(q)
+        })
+        .sort((a, b) => Number(a.done) - Number(b.done))
     },
 
     remaining(): number {
