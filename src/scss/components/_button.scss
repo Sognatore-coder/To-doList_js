@@ -1,4 +1,4 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .btn {
   display: inline-flex;
@@ -11,7 +11,10 @@
   border-radius: $radius-md;
   font-weight: 600;
   line-height: 1;
-  transition: background-color $transition, border-color $transition, color $transition;
+  transition:
+    background-color $transition,
+    border-color $transition,
+    color $transition;
 
   &--primary {
     background: var(--accent);
@@ -41,14 +44,12 @@
     }
   }
 
-  // Кнопка «Добавить задачу»: на узких экранах на всю ширину
   &--add {
     @include up(sm) {
       justify-self: start;
     }
   }
 
-  // Квадратная кнопка-иконка (редактировать / удалить)
   &--icon {
     width: $tap-target;
     padding: 0;

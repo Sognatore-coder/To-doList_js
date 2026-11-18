@@ -1,5 +1,5 @@
-@use "sass:map";
-@use "variables" as *;
+@use 'sass:map';
+@use 'variables' as *;
 
 @mixin up($key) {
   @media (min-width: map.get($breakpoints, $key)) {
@@ -7,7 +7,6 @@
   }
 }
 
-// Скрыть визуально, но оставить для скринридеров
 @mixin visually-hidden {
   position: absolute;
   width: 1px;
@@ -21,7 +20,6 @@
   border: 0;
 }
 
-// Видимый фокус для клавиатуры
 @mixin focus-ring {
   outline: 3px solid var(--focus);
   outline-offset: 2px;

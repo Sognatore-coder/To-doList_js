@@ -1,4 +1,4 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .counter {
   font-size: rem(14);
@@ -19,7 +19,9 @@
   border-radius: $radius-md;
   background: var(--surface);
   box-shadow: var(--shadow);
-  transition: background-color $transition, border-color $transition;
+  transition:
+    background-color $transition,
+    border-color $transition;
 
   &__check {
     display: flex;

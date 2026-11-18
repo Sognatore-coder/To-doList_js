@@ -1,10 +1,9 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .visually-hidden {
   @include visually-hidden;
 }
 
-// Ссылка «Перейти к содержимому» для клавиатуры
 .skip-link {
   @include visually-hidden;
 

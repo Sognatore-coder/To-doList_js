@@ -1,18 +1,18 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .header {
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "brand actions"
-    "nav nav";
+    'brand actions'
+    'nav nav';
   align-items: center;
   gap: space(3) space(4);
   margin-bottom: space(6);
 
   @include up(md) {
     grid-template-columns: auto 1fr auto;
-    grid-template-areas: "brand nav actions";
+    grid-template-areas: 'brand nav actions';
     margin-bottom: space(8);
   }
 
@@ -32,7 +32,6 @@
     min-width: 0;
   }
 
-  // На узких экранах почту показываем на странице задач, в шапке она не помещается
   &__user {
     display: none;
     max-width: 12rem;

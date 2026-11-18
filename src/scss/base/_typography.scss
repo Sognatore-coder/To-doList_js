@@ -1,4 +1,4 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 body {
   min-height: 100vh;
@@ -7,7 +7,9 @@ body {
   line-height: 1.5;
   color: var(--text);
   background: var(--bg);
-  transition: background-color $transition, color $transition;
+  transition:
+    background-color $transition,
+    color $transition;
 }
 
 h1 {

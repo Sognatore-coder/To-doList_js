@@ -1,10 +1,9 @@
-@use "sass:math";
+@use 'sass:math';
 
 @function rem($px, $base: 16) {
   @return math.div($px, $base) * 1rem;
 }
 
-// Шаг сетки отступов
 @function space($n) {
   @return rem(4 * $n);
 }

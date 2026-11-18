@@ -1,4 +1,4 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .theme-switcher {
   position: relative;
@@ -18,21 +18,22 @@
 
   &__icon {
     grid-area: 1 / 1;
-    transition: opacity $transition, transform $transition;
+    transition:
+      opacity $transition,
+      transform $transition;
   }
 
-  // Светлая тема — показываем луну (переключиться на тёмную)
   &__icon--sun {
     opacity: 0;
     transform: rotate(-60deg);
   }
 
-  &[aria-pressed="true"] &__icon--sun {
+  &[aria-pressed='true'] &__icon--sun {
     opacity: 1;
     transform: none;
   }
 
-  &[aria-pressed="true"] &__icon--moon {
+  &[aria-pressed='true'] &__icon--moon {
     opacity: 0;
     transform: rotate(60deg);
   }

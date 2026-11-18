@@ -1,4 +1,4 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .search {
   position: relative;
@@ -42,13 +42,15 @@
     background: transparent;
     color: var(--text-muted);
     font-weight: 600;
-    transition: background-color $transition, color $transition;
+    transition:
+      background-color $transition,
+      color $transition;
 
     &:hover {
       color: var(--text);
     }
 
-    &[aria-pressed="true"] {
+    &[aria-pressed='true'] {
       background: var(--accent);
       color: var(--accent-contrast);
     }

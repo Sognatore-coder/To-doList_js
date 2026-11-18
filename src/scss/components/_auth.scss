@@ -1,6 +1,5 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
-// Карточка форм входа и регистрации
 .auth {
   display: grid;
   gap: space(4);

@@ -1,4 +1,4 @@
-@use "../utils" as *;
+@use '../utils' as *;
 
 .about {
   display: grid;
@@ -99,7 +99,7 @@
     position: relative;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       top: space(2);
       left: calc(-#{space(5)} - 6px);
