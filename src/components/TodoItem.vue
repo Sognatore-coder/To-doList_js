@@ -1,8 +1,12 @@
-<script setup>
-defineProps({
-  todo: { type: Object, required: true },
-});
-defineEmits(['toggle', 'edit', 'delete']);
+<script setup lang="ts">
+import type { Todo } from '../types/todo'
+
+defineProps<{ todo: Todo }>()
+defineEmits<{
+  toggle: [id: string]
+  edit: [id: string]
+  delete: [id: string]
+}>()
 </script>
 
 <template>
@@ -15,8 +19,10 @@ defineEmits(['toggle', 'edit', 'delete']);
         :checked="todo.done"
         :aria-labelledby="`task-title-${todo.id}`"
         @change="$emit('toggle', todo.id)"
-      >
-      <span :id="`task-title-${todo.id}`" class="task__title">{{ todo.title }}</span>
+      />
+      <span :id="`task-title-${todo.id}`" class="task__title">{{
+        todo.title
+      }}</span>
     </label>
 
     <div class="task__actions">
@@ -28,8 +34,20 @@ defineEmits(['toggle', 'edit', 'delete']);
         :aria-labelledby="`edit-${todo.id} task-title-${todo.id}`"
         @click="$emit('edit', todo.id)"
       >
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-          <path d="M4 20h4L19 9l-4-4L4 16v4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M4 20h4L19 9l-4-4L4 16v4z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linejoin="round"
+          />
         </svg>
       </button>
       <button
@@ -40,8 +58,21 @@ defineEmits(['toggle', 'edit', 'delete']);
         :aria-labelledby="`delete-${todo.id} task-title-${todo.id}`"
         @click="$emit('delete', todo.id)"
       >
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-          <path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
       </button>
     </div>

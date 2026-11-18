@@ -1,27 +1,28 @@
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
+import { ref, watch } from 'vue'
 
-const props = defineProps({
-  open: { type: Boolean, default: false },
-  labelledby: { type: String, required: true },
-  describedby: { type: String, default: undefined },
-});
-const emit = defineEmits(['close']);
+const props = defineProps<{
+  open: boolean
+  labelledby: string
+  describedby?: string
+}>()
+const emit = defineEmits<{ close: [] }>()
 
-const dialog = ref(null);
+const dialog = ref<HTMLDialogElement | null>(null)
 
 watch(
   () => props.open,
   (isOpen) => {
-    const el = dialog.value;
-    if (isOpen && !el.open) el.showModal();
-    else if (!isOpen && el.open) el.close();
+    const el = dialog.value
+    if (!el) return
+    if (isOpen && !el.open) el.showModal()
+    else if (!isOpen && el.open) el.close()
   },
   { flush: 'post' }
-);
+)
 
-function onBackdropClick(event) {
-  if (event.target === dialog.value) emit('close');
+function onBackdropClick(event: MouseEvent): void {
+  if (event.target === dialog.value) emit('close')
 }
 </script>
 
@@ -34,6 +35,7 @@ function onBackdropClick(event) {
     @close="emit('close')"
     @click="onBackdropClick"
   >
+    <!-- v-if: содержимое существует только пока окно открыто — форма каждый раз создаётся «с нуля», без остатков прошлого ввода -->
     <slot v-if="open" />
   </dialog>
 </template>

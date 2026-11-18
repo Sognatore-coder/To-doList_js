@@ -1,16 +1,18 @@
-<script setup>
-import { useAnnouncer } from './composables/useAnnouncer';
-import AppHeader from './components/AppHeader.vue';
+<script setup lang="ts">
+import { useAnnouncer } from './composables/useAnnouncer'
+import AppHeader from './components/AppHeader.vue'
 
-const { status } = useAnnouncer();
+const { status } = useAnnouncer()
 
-function focusMain() {
-  document.getElementById('main')?.focus();
+function focusMain(): void {
+  document.getElementById('main')?.focus()
 }
 </script>
 
 <template>
-  <a class="skip-link" href="#main" @click.prevent="focusMain">Перейти к содержимому</a>
+  <a class="skip-link" href="#main" @click.prevent="focusMain"
+    >Перейти к содержимому</a
+  >
 
   <div class="container">
     <AppHeader />

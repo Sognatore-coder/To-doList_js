@@ -1,14 +1,14 @@
-<script setup>
-defineProps({
-  modelValue: { type: String, required: true },
-});
-defineEmits(['update:modelValue']);
+<script setup lang="ts">
+import type { TodoFilter } from '../types/todo'
 
-const options = [
+defineProps<{ modelValue: TodoFilter }>()
+defineEmits<{ 'update:modelValue': [value: TodoFilter] }>()
+
+const options: { value: TodoFilter; label: string }[] = [
   { value: 'all', label: 'Все' },
   { value: 'active', label: 'Активные' },
-  { value: 'done', label: 'Готовые' },
-];
+  { value: 'done', label: 'Готовые' }
+]
 </script>
 
 <template>

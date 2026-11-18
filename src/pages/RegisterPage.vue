@@ -1,71 +1,85 @@
-<script setup>
-import { ref, reactive, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore, EMAIL_RE, MIN_PASSWORD_LENGTH } from '../stores/user';
-import FormField from '../components/FormField.vue';
+<script setup lang="ts">
+import { ref, reactive, watch } from 'vue'
+import type { Ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore, EMAIL_RE, MIN_PASSWORD_LENGTH } from '../stores/user'
+import FormField from '../components/FormField.vue'
 
-const router = useRouter();
-const userStore = useUserStore();
+const router = useRouter()
+const userStore = useUserStore()
 
-const email = ref('');
-const password = ref('');
-const confirm = ref('');
-const errors = reactive({ email: '', password: '', confirm: '' });
-const busy = ref(false);
-const emailField = ref(null);
-const passwordField = ref(null);
-const confirmField = ref(null);
+const email = ref('')
+const password = ref('')
+const confirm = ref('')
+const errors = reactive({ email: '', password: '', confirm: '' })
+const busy = ref(false)
+type FieldRef = Ref<InstanceType<typeof FormField> | null>
 
-watch(email, () => { errors.email = ''; });
-watch(password, () => { errors.password = ''; });
-watch(confirm, () => { errors.confirm = ''; });
+const emailField: FieldRef = ref(null)
+const passwordField: FieldRef = ref(null)
+const confirmField: FieldRef = ref(null)
 
-function validate() {
-  const value = email.value.trim();
+watch(email, () => {
+  errors.email = ''
+})
+watch(password, () => {
+  errors.password = ''
+})
+watch(confirm, () => {
+  errors.confirm = ''
+})
+
+function validate(): boolean {
+  const value = email.value.trim()
   errors.email = !value
     ? 'Введите email'
     : !EMAIL_RE.test(value)
       ? 'Введите email в формате name@example.com'
-      : '';
+      : ''
   errors.password = !password.value
     ? 'Придумайте пароль'
     : password.value.length < MIN_PASSWORD_LENGTH
       ? `Пароль должен быть не короче ${MIN_PASSWORD_LENGTH} символов`
-      : '';
+      : ''
   errors.confirm = !confirm.value
     ? 'Повторите пароль'
     : confirm.value !== password.value
       ? 'Пароли не совпадают'
-      : '';
+      : ''
 
-  const firstInvalid = [
+  // Фокус — на первое поле с ошибкой
+  const invalid: [string, FieldRef][] = [
     [errors.email, emailField],
     [errors.password, passwordField],
-    [errors.confirm, confirmField],
-  ].find(([error]) => error);
-  firstInvalid?.[1].value.focus();
-  return !firstInvalid;
+    [errors.confirm, confirmField]
+  ]
+  const firstInvalid = invalid.find(([error]) => error)
+  firstInvalid?.[1].value?.focus()
+  return !firstInvalid
 }
 
-async function onSubmit() {
-  if (!validate()) return;
+async function onSubmit(): Promise<void> {
+  if (!validate()) return
 
-  busy.value = true;
-  const result = await userStore.register(email.value, password.value);
-  busy.value = false;
+  busy.value = true
+  const result = await userStore.register(email.value, password.value)
+  busy.value = false
 
   if (!result.ok) {
-    errors.email = result.error;
-    return emailField.value.focus();
+    errors.email = result.error
+    emailField.value?.focus()
+    return
   }
-  router.push({ name: 'login', query: { registered: '1' } });
+  router.push({ name: 'login', query: { registered: '1' } })
 }
 </script>
 
 <template>
   <section class="auth">
     <h1 class="auth__title">Регистрация</h1>
-    <p class="auth__lead">Создайте аккаунт — у каждого пользователя свой список задач.</p>
+    <p class="auth__lead">
+      Создайте аккаунт — у каждого пользователя свой список задач.
+    </p>
 
     <form class="auth__form" novalidate @submit.prevent="onSubmit">
       <FormField
@@ -97,7 +111,9 @@ async function onSubmit() {
         :error="errors.confirm"
       />
 
-      <button class="btn btn--primary" type="submit" :disabled="busy">Зарегистрироваться</button>
+      <button class="btn btn--primary" type="submit" :disabled="busy">
+        Зарегистрироваться
+      </button>
     </form>
 
     <p class="auth__alt">

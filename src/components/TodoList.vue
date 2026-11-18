@@ -1,11 +1,16 @@
-<script setup>
-import TodoItem from './TodoItem.vue';
+<script setup lang="ts">
+import type { Todo } from '../types/todo'
+import TodoItem from './TodoItem.vue'
 
-defineProps({
-  todos: { type: Array, required: true },
-  total: { type: Number, required: true },
-});
-defineEmits(['toggle', 'edit', 'delete']);
+defineProps<{
+  todos: Todo[]
+  total: number
+}>()
+defineEmits<{
+  toggle: [id: string]
+  edit: [id: string]
+  delete: [id: string]
+}>()
 </script>
 
 <template>
@@ -19,7 +24,12 @@ defineEmits(['toggle', 'edit', 'delete']);
       @delete="$emit('delete', $event)"
     />
   </ul>
+  <!-- v-if: пустого <ul> в DOM быть не должно, вместо него — подсказка -->
   <p v-else class="empty">
-    {{ total ? 'Ничего не найдено. Измените запрос или фильтр.' : 'Задач пока нет. Добавьте первую кнопкой выше.' }}
+    {{
+      total
+        ? 'Ничего не найдено. Измените запрос или фильтр.'
+        : 'Задач пока нет. Добавьте первую кнопкой выше.'
+    }}
   </p>
 </template>

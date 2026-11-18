@@ -1,54 +1,69 @@
-<script setup>
-import { ref, reactive, computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useUserStore, EMAIL_RE } from '../stores/user';
-import FormField from '../components/FormField.vue';
+<script setup lang="ts">
+import { ref, reactive, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
+import { useUserStore, EMAIL_RE } from '../stores/user'
+import FormField from '../components/FormField.vue'
 
-const route = useRoute();
-const router = useRouter();
-const userStore = useUserStore();
+const route = useRoute()
+const router = useRouter()
+const userStore = useUserStore()
 
-const email = ref('');
-const password = ref('');
-const errors = reactive({ email: '', password: '' });
-const formError = ref('');
-const busy = ref(false);
-const emailField = ref(null);
-const passwordField = ref(null);
+const email = ref('')
+const password = ref('')
+const errors = reactive({ email: '', password: '' })
+const formError = ref('')
+const busy = ref(false)
+const emailField = ref<InstanceType<typeof FormField> | null>(null)
+const passwordField = ref<InstanceType<typeof FormField> | null>(null)
 
-// После регистрации приходим сюда с ?registered=1
-const justRegistered = computed(() => route.query.registered === '1');
+const justRegistered = computed(() => route.query.registered === '1')
 
-// Правка поля снимает его ошибку
-watch(email, () => { errors.email = ''; formError.value = ''; });
-watch(password, () => { errors.password = ''; formError.value = ''; });
+watch(email, () => {
+  errors.email = ''
+  formError.value = ''
+})
+watch(password, () => {
+  errors.password = ''
+  formError.value = ''
+})
 
-// Возвращаем пользователя туда, куда он шёл (только внутренние пути)
-function redirectTarget() {
-  const target = route.query.redirect;
-  return typeof target === 'string' && target.startsWith('/') && !target.startsWith('//') ? target : { name: 'todo' };
+function redirectTarget(): RouteLocationRaw {
+  const target = route.query.redirect
+  return typeof target === 'string' &&
+    target.startsWith('/') &&
+    !target.startsWith('//')
+    ? target
+    : { name: 'todo' }
 }
 
-async function onSubmit() {
+async function onSubmit(): Promise<void> {
   errors.email = !email.value.trim()
     ? 'Введите email'
     : !EMAIL_RE.test(email.value.trim())
       ? 'Введите email в формате name@example.com'
-      : '';
-  errors.password = password.value ? '' : 'Введите пароль';
+      : ''
+  errors.password = password.value ? '' : 'Введите пароль'
 
-  if (errors.email) return emailField.value.focus();
-  if (errors.password) return passwordField.value.focus();
+  if (errors.email) {
+    emailField.value?.focus()
+    return
+  }
+  if (errors.password) {
+    passwordField.value?.focus()
+    return
+  }
 
-  busy.value = true;
-  const result = await userStore.login(email.value, password.value);
-  busy.value = false;
+  busy.value = true
+  const result = await userStore.login(email.value, password.value)
+  busy.value = false
 
   if (!result.ok) {
-    formError.value = result.error;
-    return passwordField.value.focus();
+    formError.value = result.error
+    passwordField.value?.focus()
+    return
   }
-  router.push(redirectTarget());
+  router.push(redirectTarget())
 }
 </script>
 
@@ -57,7 +72,9 @@ async function onSubmit() {
     <h1 class="auth__title">Вход</h1>
     <p class="auth__lead">Войдите, чтобы работать со своими задачами.</p>
 
-    <p v-if="justRegistered" class="auth__notice" role="status">Аккаунт создан. Теперь можно войти.</p>
+    <p v-if="justRegistered" class="auth__notice" role="status">
+      Аккаунт создан. Теперь можно войти.
+    </p>
 
     <form class="auth__form" novalidate @submit.prevent="onSubmit">
       <FormField
@@ -81,7 +98,9 @@ async function onSubmit() {
 
       <p v-if="formError" class="auth__error" role="alert">{{ formError }}</p>
 
-      <button class="btn btn--primary" type="submit" :disabled="busy">Войти</button>
+      <button class="btn btn--primary" type="submit" :disabled="busy">
+        Войти
+      </button>
     </form>
 
     <p class="auth__alt">
