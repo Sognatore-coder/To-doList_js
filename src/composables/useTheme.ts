@@ -13,6 +13,7 @@ export function useTheme() {
     try {
       localStorage.setItem(THEME_KEY, value)
     } catch {
+      // localStorage недоступен
     }
   })
 
